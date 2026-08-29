@@ -1,6 +1,6 @@
 {
   "cases": "results/cases.json",
-  "generated_at": "2026-08-29T20:44:49.999Z",
+  "generated_at": "2026-08-29T20:52:01.471Z",
   "corpus_lines": 35,
   "variants": {
     "fragile_floor": {
@@ -116,7 +116,7 @@
     },
     "baseline": {
       "label": "Baseline (one-shot)",
-      "component": "results/baseline-card.mjs",
+      "component": "results/baseline-card.opus.mjs",
       "survival_rate": "100.0%",
       "pass": 100,
       "total": 100,
@@ -126,7 +126,7 @@
     },
     "agent": {
       "label": "Advanced (verify-fix loop)",
-      "component": "results/agent-card.mjs",
+      "component": "results/agent-card.opus.mjs",
       "survival_rate": "100.0%",
       "pass": 100,
       "total": 100,
@@ -163,5 +163,6 @@
     "seconds": 51.1
   },
   "delta_floor_to_agent": "100.0 pts",
-  "delta_baseline_to_agent": "0.0 pts"
+  "delta_baseline_to_agent": "0.0 pts",
+  "model": "claude-opus-5"
 }

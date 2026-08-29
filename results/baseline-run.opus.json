@@ -1,0 +1,17 @@
+{
+  "agent": "baseline",
+  "model": "claude-opus-5",
+  "effort": "high",
+  "component": "corpus/restaurant-card.mjs",
+  "out": "results/baseline-card.mjs",
+  "calls": 1,
+  "seconds": 109.2,
+  "usage": {
+    "input_tokens": 2,
+    "output_tokens": 9471,
+    "cache_read_input_tokens": 4026,
+    "cache_creation_input_tokens": 1670,
+    "cost_usd": 0.25713
+  },
+  "trajectory": "D:\\PROJECTS\\edge-hardener\\trajectories\\baseline-2026-08-29T20-41-38-640Z.jsonl"
+}

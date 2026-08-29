@@ -1,104 +1,56 @@
-// Hardened card component. Framework-free.
-// export render(props) -> HTMLElement
-
-const BOX = 'box-sizing:border-box';
-
 export function render(p) {
-  const props = p || {};
-
   const el = document.createElement('div');
-  el.style.cssText =
-    `${BOX};display:flex;gap:12px;padding:12px;font-family:sans-serif;` +
-    'width:100%;max-width:100%;overflow:hidden;align-items:flex-start';
+  el.style.cssText = 'display:flex;gap:12px;padding:12px;font-family:sans-serif';
 
-  // --- media: never point <img> at a null/empty src (that 404s and logs a console error)
-  const src = typeof props.image === 'string' ? props.image.trim() : '';
-  const mediaCss =
-    `${BOX};flex:0 0 auto;width:80px;height:80px;border-radius:6px;` +
-    'object-fit:cover;background:#eee';
-
-  const makePlaceholder = () => {
-    const ph = document.createElement('div');
-    ph.style.cssText =
-      mediaCss +
-      ';display:flex;align-items:center;justify-content:center;' +
-      'color:#888;font-size:11px;text-align:center;line-height:1.2';
-    ph.textContent = 'No image';
-    ph.setAttribute('role', 'img');
-    ph.setAttribute('aria-label', 'No image available');
-    return ph;
-  };
-
-  if (src) {
-    const img = document.createElement('img');
-    img.style.cssText = mediaCss;
-    img.alt = typeof props.name === 'string' ? props.name : '';
-    img.loading = 'lazy';
-    img.addEventListener('error', () => {
-      if (img.parentNode) img.parentNode.replaceChild(makePlaceholder(), img);
-    });
-    img.src = src;
-    el.appendChild(img);
+  const img = document.createElement('img');
+  // Avoid 404 by providing fallback for null image
+  if (p.image) {
+    img.src = p.image;
   } else {
-    el.appendChild(makePlaceholder());
+    img.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="80" height="80"%3E%3Crect fill="%23eee" width="80" height="80"/%3E%3C/svg%3E';
   }
+  img.style.cssText = 'width:80px;height:80px;object-fit:cover;flex-shrink:0';
+  img.alt = p.name || 'Restaurant';
+  el.appendChild(img);
 
-  // --- body: min-width:0 is what actually lets a flex child shrink below content width
   const body = document.createElement('div');
-  body.style.cssText = `${BOX};flex:1 1 auto;min-width:0;max-width:100%`;
-
-  const wrapCss =
-    'min-width:0;max-width:100%;white-space:normal;' +
-    'overflow-wrap:anywhere;word-break:break-word';
-
-  const name =
-    typeof props.name === 'string' && props.name.trim() ? props.name : 'Unnamed restaurant';
+  body.style.cssText = 'display:flex;flex-direction:column;gap:4px;flex:1;min-width:0';
+  
   const h = document.createElement('h3');
-  h.textContent = name;
-  h.title = name;
-  h.style.cssText = `${BOX};margin:0 0 4px;font-size:16px;line-height:1.3;${wrapCss}`;
+  h.textContent = p.name;
+  h.style.cssText = 'margin:0;overflow-wrap:break-word';
   body.appendChild(h);
 
-  const list = Array.isArray(props.cuisine)
-    ? props.cuisine.filter((c) => typeof c === 'string' && c.trim())
-    : typeof props.cuisine === 'string' && props.cuisine.trim()
-      ? [props.cuisine]
-      : [];
   const cui = document.createElement('div');
-  cui.textContent = list.length ? list.join(' · ') : 'Cuisine not listed';
-  if (list.length) cui.title = list.join(' · ');
-  cui.style.cssText = `${BOX};color:#555;font-size:13px;${wrapCss}`;
+  let cuisineText = 'Unlisted';
+  if (p.cuisine && Array.isArray(p.cuisine) && p.cuisine.length > 0) {
+    cuisineText = p.cuisine[0];
+  }
+  cui.textContent = cuisineText;
+  cui.style.cssText = 'font-size:0.9em;color:#666;overflow-wrap:break-word';
   body.appendChild(cui);
 
-  // --- meta row: wraps instead of pushing past the host's right edge
-  const meta = document.createElement('div');
-  meta.style.cssText =
-    `${BOX};display:flex;flex-wrap:wrap;align-items:baseline;gap:0 6px;` +
-    `margin-top:4px;font-size:13px;${wrapCss}`;
+  const priceRating = document.createElement('div');
+  let priceText = p.price !== null && p.price !== undefined ? p.price : 'Price N/A';
+  let ratingText = p.rating !== null && p.rating !== undefined ? ' · ' + p.rating.toFixed(1) : '';
+  priceRating.textContent = priceText + ratingText;
+  priceRating.style.cssText = 'font-size:0.9em;overflow-wrap:break-word';
+  body.appendChild(priceRating);
 
-  const price = document.createElement('span');
-  const rawPrice = props.price;
-  const hasPrice =
-    rawPrice !== null && rawPrice !== undefined && String(rawPrice).trim() !== '';
-  price.textContent = hasPrice ? String(rawPrice) : 'Price N/A';
-  price.style.cssText = `${BOX};${wrapCss}`;
-  meta.appendChild(price);
-
-  const rating = document.createElement('span');
-  const r = typeof props.rating === 'number' ? props.rating : Number(props.rating);
-  rating.textContent = Number.isFinite(r) ? `· ${r.toFixed(1)}` : '· Not rated';
-  rating.style.cssText = `${BOX};${wrapCss}`;
-  meta.appendChild(rating);
-
-  const reviews = Number(props.reviews);
-  if (Number.isFinite(reviews) && reviews > 0) {
-    const rv = document.createElement('span');
-    rv.textContent = `· ${reviews} reviews`;
-    rv.style.cssText = `${BOX};color:#666;${wrapCss}`;
-    meta.appendChild(rv);
+  if (p.address) {
+    const address = document.createElement('div');
+    address.textContent = p.address;
+    address.style.cssText = 'font-size:0.85em;color:#999;overflow-wrap:break-word';
+    body.appendChild(address);
   }
 
-  body.appendChild(meta);
+  if (p.author) {
+    const author = document.createElement('div');
+    author.textContent = p.author;
+    author.style.cssText = 'font-size:0.85em;color:#999;overflow-wrap:break-word';
+    body.appendChild(author);
+  }
+
   el.appendChild(body);
   return el;
 }

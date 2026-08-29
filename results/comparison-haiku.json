@@ -1,6 +1,6 @@
 {
   "cases": "results/cases.json",
-  "generated_at": "2026-08-29T20:44:49.999Z",
+  "generated_at": "2026-08-29T20:56:17.451Z",
   "corpus_lines": 35,
   "variants": {
     "fragile_floor": {
@@ -117,12 +117,63 @@
     "baseline": {
       "label": "Baseline (one-shot)",
       "component": "results/baseline-card.mjs",
-      "survival_rate": "100.0%",
-      "pass": 100,
+      "survival_rate": "50.0%",
+      "pass": 50,
       "total": 100,
-      "lines": 468,
-      "lines_vs_corpus": 433,
-      "fails": []
+      "lines": 189,
+      "lines_vs_corpus": 154,
+      "fails": [
+        "longName:mobile-sm:overflow",
+        "longName:mobile:overflow",
+        "longName:tablet:overflow",
+        "longName:desktop:overflow",
+        "unicodeName:mobile-sm:overflow",
+        "unicodeName:mobile:overflow",
+        "unbrokenName:mobile-sm:overflow",
+        "unbrokenName:mobile:overflow",
+        "unbrokenName:tablet:overflow",
+        "unbrokenName:desktop:overflow",
+        "unbrokenAddress:mobile-sm:overflow",
+        "unbrokenAddress:mobile:overflow",
+        "unbrokenAddress:tablet:overflow",
+        "unbrokenAddress:desktop:overflow",
+        "unbrokenCuisine:mobile-sm:overflow",
+        "unbrokenCuisine:mobile:overflow",
+        "unbrokenCuisine:tablet:overflow",
+        "unbrokenCuisine:desktop:overflow",
+        "unbrokenAuthor:mobile-sm:overflow",
+        "unbrokenAuthor:mobile:overflow",
+        "unbrokenAuthor:tablet:overflow",
+        "unbrokenAuthor:desktop:overflow",
+        "rtlName:mobile-sm:overflow",
+        "bidiMixed:mobile-sm:overflow",
+        "bidiMixed:mobile:overflow",
+        "emojiName:mobile-sm:overflow",
+        "emojiName:mobile:overflow",
+        "emojiName:tablet:overflow",
+        "emojiName:desktop:overflow",
+        "stacked-nightmare:mobile-sm:overflow",
+        "stacked-nightmare:mobile:overflow",
+        "stacked-nightmare:tablet:overflow",
+        "stacked-nightmare:desktop:overflow",
+        "stacked-unbreakable:mobile-sm:overflow",
+        "stacked-unbreakable:mobile:overflow",
+        "stacked-unbreakable:tablet:overflow",
+        "stacked-unbreakable:desktop:overflow",
+        "stacked-nested:mobile-sm:overflow",
+        "stacked-nested:mobile:overflow",
+        "stacked-nested:tablet:overflow",
+        "stacked-nested:desktop:overflow",
+        "stacked-rtl:mobile-sm:overflow",
+        "stacked-emoji:mobile-sm:overflow",
+        "stacked-emoji:mobile:overflow",
+        "stacked-emoji:tablet:overflow",
+        "stacked-emoji:desktop:overflow",
+        "stacked-everything:mobile-sm:overflow",
+        "stacked-everything:mobile:overflow",
+        "stacked-everything:tablet:overflow",
+        "stacked-everything:desktop:overflow"
+      ]
     },
     "agent": {
       "label": "Advanced (verify-fix loop)",
@@ -130,38 +181,39 @@
       "survival_rate": "100.0%",
       "pass": 100,
       "total": 100,
-      "lines": 114,
-      "lines_vs_corpus": 79,
+      "lines": 56,
+      "lines_vs_corpus": 21,
       "fails": []
     }
   },
   "baseline_run": {
-    "model": "claude-opus-5",
+    "model": "claude-haiku-4-5",
     "calls": 1,
     "usage": {
-      "input_tokens": 2,
-      "output_tokens": 9471,
-      "cache_read_input_tokens": 4026,
-      "cache_creation_input_tokens": 1670,
-      "cost_usd": 0.25713
+      "input_tokens": 10,
+      "output_tokens": 12189,
+      "cache_read_input_tokens": 0,
+      "cache_creation_input_tokens": 4688,
+      "cost_usd": 0.071963
     },
-    "seconds": 109.2
+    "seconds": 99.6
   },
   "agent_run": {
-    "model": "claude-opus-5",
+    "model": "claude-haiku-4-5",
     "iterations": 1,
     "model_calls": 1,
     "stop_reason": "survival-100%",
     "dead_patches": 0,
     "usage": {
-      "input_tokens": 2,
-      "output_tokens": 3544,
-      "cache_read_input_tokens": 4270,
-      "cache_creation_input_tokens": 10087,
-      "cost_usd": 0.19960699999999998
+      "input_tokens": 20,
+      "output_tokens": 13641,
+      "cache_read_input_tokens": 11224,
+      "cache_creation_input_tokens": 11224,
+      "cost_usd": 0.0997874
     },
-    "seconds": 51.1
+    "seconds": 237.7
   },
   "delta_floor_to_agent": "100.0 pts",
-  "delta_baseline_to_agent": "0.0 pts"
+  "delta_baseline_to_agent": "50.0 pts",
+  "model": "claude-haiku-4-5"
 }

@@ -8,8 +8,16 @@ import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
-export const MODEL = 'claude-opus-5';
-export const EFFORT = 'high';
+// PRIMARY comparison runs on Haiku 4.5. Opus 5 one-shot solved the whole adversarial battery
+// blind — 100/100 with no feedback — so on a frontier model the verify-fix loop has no
+// survival headroom to demonstrate and baseline/agent tie at 100%. A fallible model is what
+// makes the loop's contribution measurable at all.
+//
+// The Opus 5 run is kept as a SECONDARY no-damage check (results/comparison-opus.json):
+// both sides still reach 100%, and the separation there is merge quality, not survival.
+// Override for that run with:  MODEL=claude-opus-5 npm run baseline
+export const MODEL = process.env.MODEL || 'claude-haiku-4-5';
+export const EFFORT = process.env.EFFORT || 'high';
 export const MAX_TOKENS = 16000;
 
 export const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -169,6 +177,20 @@ export function hardRuleViolations(rawSrc) {
 }
 
 export const sha = (s) => createHash('sha256').update(s).digest('hex').slice(0, 12);
+
+/**
+ * The data contract: which props the component is expected to render. Both agents get this,
+ * identically. Without it the baseline is scored on a requirement it cannot infer — the
+ * corpus component never touches `address`, so a one-shot rewrite has no reason to render it,
+ * and every case fails content-lost for a reason that has nothing to do with hardening.
+ * agents/baseline.md is explicit that the baseline must not be crippled; the loop's advantage
+ * has to be iteration, not a withheld spec.
+ */
+export function propContract(cases) {
+  const keys = new Set();
+  for (const c of cases) for (const k of Object.keys(c.props || {})) keys.add(k);
+  return [...keys].sort();
+}
 
 /** Live trajectory log — one JSON object per line, appended as it happens. */
 export function trajectory(name) {

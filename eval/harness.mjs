@@ -12,6 +12,9 @@ import { fileURLToPath } from 'node:url';
 import { join, normalize, extname } from 'node:path';
 
 const VIEWPORTS = [
+  // 320 is the real floor for the stacked cases — it is where a text column that forgot
+  // min-width:0 stops shrinking and starts spilling.
+  { name: 'mobile-sm', width: 320, height: 568 },
   { name: 'mobile', width: 360, height: 640 },
   { name: 'tablet', width: 768, height: 1024 },
   { name: 'desktop', width: 1280, height: 800 },

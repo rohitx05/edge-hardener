@@ -1,6 +1,307 @@
 {
-  "survival_rate": "100.0%",
-  "pass": 30,
-  "total": 30,
-  "fails": []
+  "survival_rate": "50.0%",
+  "pass": 50,
+  "total": 100,
+  "fails": [
+    {
+      "case": "longName",
+      "viewport": "mobile-sm",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "longName",
+      "viewport": "mobile",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "longName",
+      "viewport": "tablet",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "longName",
+      "viewport": "desktop",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "unicodeName",
+      "viewport": "mobile-sm",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "unicodeName",
+      "viewport": "mobile",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "unbrokenName",
+      "viewport": "mobile-sm",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "unbrokenName",
+      "viewport": "mobile",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "unbrokenName",
+      "viewport": "tablet",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "unbrokenName",
+      "viewport": "desktop",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "unbrokenAddress",
+      "viewport": "mobile-sm",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "unbrokenAddress",
+      "viewport": "mobile",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "unbrokenAddress",
+      "viewport": "tablet",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "unbrokenAddress",
+      "viewport": "desktop",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "unbrokenCuisine",
+      "viewport": "mobile-sm",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "unbrokenCuisine",
+      "viewport": "mobile",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "unbrokenCuisine",
+      "viewport": "tablet",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "unbrokenCuisine",
+      "viewport": "desktop",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "unbrokenAuthor",
+      "viewport": "mobile-sm",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "unbrokenAuthor",
+      "viewport": "mobile",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "unbrokenAuthor",
+      "viewport": "tablet",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "unbrokenAuthor",
+      "viewport": "desktop",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "rtlName",
+      "viewport": "mobile-sm",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "bidiMixed",
+      "viewport": "mobile-sm",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "bidiMixed",
+      "viewport": "mobile",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "emojiName",
+      "viewport": "mobile-sm",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "emojiName",
+      "viewport": "mobile",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "emojiName",
+      "viewport": "tablet",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "emojiName",
+      "viewport": "desktop",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "stacked-nightmare",
+      "viewport": "mobile-sm",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "stacked-nightmare",
+      "viewport": "mobile",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "stacked-nightmare",
+      "viewport": "tablet",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "stacked-nightmare",
+      "viewport": "desktop",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "stacked-unbreakable",
+      "viewport": "mobile-sm",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "stacked-unbreakable",
+      "viewport": "mobile",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "stacked-unbreakable",
+      "viewport": "tablet",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "stacked-unbreakable",
+      "viewport": "desktop",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "stacked-nested",
+      "viewport": "mobile-sm",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "stacked-nested",
+      "viewport": "mobile",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "stacked-nested",
+      "viewport": "tablet",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "stacked-nested",
+      "viewport": "desktop",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "stacked-rtl",
+      "viewport": "mobile-sm",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "stacked-emoji",
+      "viewport": "mobile-sm",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "stacked-emoji",
+      "viewport": "mobile",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "stacked-emoji",
+      "viewport": "tablet",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "stacked-emoji",
+      "viewport": "desktop",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "stacked-everything",
+      "viewport": "mobile-sm",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "stacked-everything",
+      "viewport": "mobile",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "stacked-everything",
+      "viewport": "tablet",
+      "pass": false,
+      "reason": "overflow"
+    },
+    {
+      "case": "stacked-everything",
+      "viewport": "desktop",
+      "pass": false,
+      "reason": "overflow"
+    }
+  ]
 }

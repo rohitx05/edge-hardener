@@ -1,24 +1,24 @@
 {
   "agent": "advanced",
-  "model": "claude-haiku-4-5",
+  "model": "claude-opus-5",
   "effort": "high",
   "component": "corpus/restaurant-card.mjs",
   "out": "results/agent-card.mjs",
   "iterations": 1,
   "model_calls": 1,
   "stop_reason": "survival-100%",
-  "seconds": 237.7,
+  "seconds": 51.1,
   "usage": {
-    "input_tokens": 20,
-    "output_tokens": 13641,
-    "cache_read_input_tokens": 11224,
-    "cache_creation_input_tokens": 11224,
-    "cost_usd": 0.0997874
+    "input_tokens": 2,
+    "output_tokens": 3544,
+    "cache_read_input_tokens": 4270,
+    "cache_creation_input_tokens": 10087,
+    "cost_usd": 0.19960699999999998
   },
   "dead_patches": 0,
   "survival_rate": "100.0%",
   "pass": 100,
   "total": 100,
   "fails": [],
-  "trajectory": "D:\\PROJECTS\\edge-hardener\\trajectories\\advanced-2026-08-29T20-51-50-197Z.jsonl"
+  "trajectory": "D:\\PROJECTS\\edge-hardener\\trajectories\\advanced-2026-08-29T20-43-45-251Z.jsonl"
 }

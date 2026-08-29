@@ -10,11 +10,17 @@ import { execFileSync } from 'node:child_process';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const CASES = 'results/cases.json';
+// Per-model comparisons live side by side: COMPARE_OUT=results/comparison-haiku.json
+const OUT_FILE = process.env.COMPARE_OUT || 'results/comparison.json';
 
+// Card paths are overridable so a past model's snapshot can be re-scored without re-running
+// the agents, e.g. AGENT_CARD=results/agent-card.opus.mjs
 const VARIANTS = [
   { key: 'fragile_floor', label: 'Fragile floor (unpatched)', component: 'corpus/restaurant-card.mjs' },
-  { key: 'baseline', label: 'Baseline (one-shot)', component: 'results/baseline-card.mjs' },
-  { key: 'agent', label: 'Advanced (verify-fix loop)', component: 'results/agent-card.mjs' },
+  { key: 'baseline', label: 'Baseline (one-shot)',
+    component: process.env.BASELINE_CARD || 'results/baseline-card.mjs' },
+  { key: 'agent', label: 'Advanced (verify-fix loop)',
+    component: process.env.AGENT_CARD || 'results/agent-card.mjs' },
 ];
 
 const score = (component) => JSON.parse(execFileSync('node',
@@ -51,8 +57,8 @@ for (const v of VARIANTS) {
     `${lines}${grew ? ` (${grew > 0 ? '+' : ''}${grew})` : ''}`]);
 }
 
-const baseline = runMeta('results/baseline-run.json');
-const agent = runMeta('results/agent-run.json');
+const baseline = runMeta(process.env.BASELINE_RUN || 'results/baseline-run.json');
+const agent = runMeta(process.env.AGENT_RUN || 'results/agent-run.json');
 if (baseline) out.baseline_run = { model: baseline.model, calls: baseline.calls, usage: baseline.usage, seconds: baseline.seconds };
 if (agent) out.agent_run = { model: agent.model, iterations: agent.iterations, model_calls: agent.model_calls,
   stop_reason: agent.stop_reason, dead_patches: agent.dead_patches, usage: agent.usage, seconds: agent.seconds };
@@ -62,7 +68,10 @@ const num = (x) => (x ? Number(x.survival_rate.replace('%', '')) : null);
 if (f && a) out.delta_floor_to_agent = `${(num(a) - num(f)).toFixed(1)} pts`;
 if (b && a) out.delta_baseline_to_agent = `${(num(a) - num(b)).toFixed(1)} pts`;
 
-writeFileSync(join(ROOT, 'results/comparison.json'), JSON.stringify(out, null, 2));
+// Record which model produced the two agent variants, so a comparison file is self-describing.
+out.model = agent?.model || baseline?.model || null;
+
+writeFileSync(join(ROOT, OUT_FILE), JSON.stringify(out, null, 2));
 
 const w = Math.max(...rows.map((r) => r[0].length));
 console.log('\n' + 'Variant'.padEnd(w) + '  Survival   Cases   Lines');
@@ -72,4 +81,4 @@ for (const [label, rate, cases, lines] of rows)
 console.log(`\n(corpus is ${corpusLines} lines; "Lines" shows the hardened file and its growth)`);
 if (out.delta_baseline_to_agent) console.log(`\nbaseline -> agent: ${out.delta_baseline_to_agent}`);
 if (out.delta_floor_to_agent) console.log(`floor    -> agent: ${out.delta_floor_to_agent}`);
-console.log('\nwrote results/comparison.json');
+console.log(`\nwrote ${OUT_FILE}${out.model ? ` (model: ${out.model})` : ''}`);

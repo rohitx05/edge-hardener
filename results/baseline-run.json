@@ -1,17 +1,17 @@
 {
   "agent": "baseline",
-  "model": "claude-opus-5",
+  "model": "claude-haiku-4-5",
   "effort": "high",
   "component": "corpus/restaurant-card.mjs",
   "out": "results/baseline-card.mjs",
   "calls": 1,
-  "seconds": 67.3,
+  "seconds": 99.6,
   "usage": {
-    "input_tokens": 2,
-    "output_tokens": 6292,
-    "cache_read_input_tokens": 3795,
-    "cache_creation_input_tokens": 1801,
-    "cost_usd": 0.1787715
+    "input_tokens": 10,
+    "output_tokens": 12189,
+    "cache_read_input_tokens": 0,
+    "cache_creation_input_tokens": 4688,
+    "cost_usd": 0.071963
   },
-  "trajectory": "D:\\PROJECTS\\edge-hardener\\trajectories\\baseline-2026-08-29T15-59-23-373Z.jsonl"
+  "trajectory": "D:\\PROJECTS\\edge-hardener\\trajectories\\baseline-2026-08-29T20-49-58-083Z.jsonl"
 }

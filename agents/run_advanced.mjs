@@ -17,7 +17,7 @@
 
 import {
   MODEL, EFFORT, callModel, extractCode, runHarness, pct, hardRuleViolations, sha,
-  read, write, trajectory,
+  read, write, trajectory, propContract,
 } from './_shared.mjs';
 
 const COMPONENT = process.env.COMPONENT || 'corpus/restaurant-card.mjs';
@@ -73,12 +73,21 @@ function memoryBlock() {
     (m.left ? `\n   it left: ${m.left}` : '')).join('\n');
 }
 
+// Identical to the line the baseline gets, so the only asymmetry between the two agents is
+// the harness feedback loop.
+const contract = propContract(cases);
+
 function buildUser(currentSrc, result) {
   return `Current component (survival ${result.survival_rate}, ${result.pass}/${result.total}):
 
 \`\`\`js
 ${currentSrc}
 \`\`\`
+
+DATA CONTRACT — render(props) is called with these props:
+${contract.join(', ')}
+Every prop that has a value must be rendered and must stay visible; a prop that is
+null/absent needs a sensible empty state.
 
 FAILING ASSERTIONS from eval/harness.mjs — fix these specifically:
 ${summariseFails(result)}

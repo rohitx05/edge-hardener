@@ -10,12 +10,19 @@
       "rating": 4.3,
       "image": "ok.jpg",
       "reviews": 128,
-      "author": "Aarav"
+      "author": "Aarav",
+      "address": "12 Linking Road, Bandra West",
+      "tags": [
+        "Outdoor seating"
+      ],
+      "review": "Great biryani, fast service."
     },
     "mustContain": [
       "The Absolutely Enormous Roof-Top Family Restaurant & Grill House Deluxe",
       "₹₹",
-      "North Indian"
+      "North Indian",
+      "12 Linking Road, Bandra West",
+      "Aarav"
     ]
   },
   {
@@ -27,11 +34,18 @@
       "rating": 4.3,
       "image": "ok.jpg",
       "reviews": 128,
-      "author": "Aarav"
+      "author": "Aarav",
+      "address": "12 Linking Road, Bandra West",
+      "tags": [
+        "Outdoor seating"
+      ],
+      "review": "Great biryani, fast service."
     },
     "mustContain": [
       "Bombay House",
-      "₹₹"
+      "₹₹",
+      "12 Linking Road, Bandra West",
+      "Aarav"
     ]
   },
   {
@@ -50,12 +64,19 @@
       "rating": 4.3,
       "image": "ok.jpg",
       "reviews": 128,
-      "author": "Aarav"
+      "author": "Aarav",
+      "address": "12 Linking Road, Bandra West",
+      "tags": [
+        "Outdoor seating"
+      ],
+      "review": "Great biryani, fast service."
     },
     "mustContain": [
       "Bombay House",
       "₹₹",
-      "North Indian"
+      "North Indian",
+      "12 Linking Road, Bandra West",
+      "Aarav"
     ]
   },
   {
@@ -69,12 +90,19 @@
       "rating": 4.3,
       "image": "ok.jpg",
       "reviews": 128,
-      "author": "Aarav"
+      "author": "Aarav",
+      "address": "12 Linking Road, Bandra West",
+      "tags": [
+        "Outdoor seating"
+      ],
+      "review": "Great biryani, fast service."
     },
     "mustContain": [
       "Bombay House",
       "₹0",
-      "North Indian"
+      "North Indian",
+      "12 Linking Road, Bandra West",
+      "Aarav"
     ]
   },
   {
@@ -88,12 +116,19 @@
       "rating": 4.3,
       "image": null,
       "reviews": 128,
-      "author": "Aarav"
+      "author": "Aarav",
+      "address": "12 Linking Road, Bandra West",
+      "tags": [
+        "Outdoor seating"
+      ],
+      "review": "Great biryani, fast service."
     },
     "mustContain": [
       "Bombay House",
       "₹₹",
-      "North Indian"
+      "North Indian",
+      "12 Linking Road, Bandra West",
+      "Aarav"
     ]
   },
   {
@@ -107,12 +142,19 @@
       "rating": null,
       "image": "ok.jpg",
       "reviews": 128,
-      "author": "Aarav"
+      "author": "Aarav",
+      "address": "12 Linking Road, Bandra West",
+      "tags": [
+        "Outdoor seating"
+      ],
+      "review": "Great biryani, fast service."
     },
     "mustContain": [
       "Bombay House",
       "₹₹",
-      "North Indian"
+      "North Indian",
+      "12 Linking Road, Bandra West",
+      "Aarav"
     ]
   },
   {
@@ -126,12 +168,19 @@
       "rating": 4.3,
       "image": "ok.jpg",
       "reviews": 0,
-      "author": "Aarav"
+      "author": "Aarav",
+      "address": "12 Linking Road, Bandra West",
+      "tags": [
+        "Outdoor seating"
+      ],
+      "review": "Great biryani, fast service."
     },
     "mustContain": [
       "Bombay House",
       "₹₹",
-      "North Indian"
+      "North Indian",
+      "12 Linking Road, Bandra West",
+      "Aarav"
     ]
   },
   {
@@ -145,12 +194,18 @@
       "rating": 4.3,
       "image": "ok.jpg",
       "reviews": 128,
-      "author": null
+      "author": null,
+      "address": "12 Linking Road, Bandra West",
+      "tags": [
+        "Outdoor seating"
+      ],
+      "review": "Great biryani, fast service."
     },
     "mustContain": [
       "Bombay House",
       "₹₹",
-      "North Indian"
+      "North Indian",
+      "12 Linking Road, Bandra West"
     ]
   },
   {
@@ -164,12 +219,273 @@
       "rating": 4.3,
       "image": "ok.jpg",
       "reviews": 128,
-      "author": "Aarav"
+      "author": "Aarav",
+      "address": "12 Linking Road, Bandra West",
+      "tags": [
+        "Outdoor seating"
+      ],
+      "review": "Great biryani, fast service."
     },
     "mustContain": [
       "🍜 café— naïve “Ræstaurant” 北京烤鸭",
       "₹₹",
-      "North Indian"
+      "North Indian",
+      "12 Linking Road, Bandra West",
+      "Aarav"
+    ]
+  },
+  {
+    "id": "unbrokenName",
+    "props": {
+      "name": "BombayHouseRooftopGrillAndFamilyDiningExperienceDeluxeMultiCuisineKitchenXXXXXXXXXXXXXXXXX",
+      "cuisine": [
+        "North Indian"
+      ],
+      "price": "₹₹",
+      "rating": 4.3,
+      "image": "ok.jpg",
+      "reviews": 128,
+      "author": "Aarav",
+      "address": "12 Linking Road, Bandra West",
+      "tags": [
+        "Outdoor seating"
+      ],
+      "review": "Great biryani, fast service."
+    },
+    "mustContain": [
+      "BombayHouseRooftopGrillAndFamilyDiningExperienceDeluxeMultiCuisineKitchenXXXXXXXXXXXXXXXXX",
+      "₹₹",
+      "North Indian",
+      "12 Linking Road, Bandra West",
+      "Aarav"
+    ]
+  },
+  {
+    "id": "unbrokenAddress",
+    "props": {
+      "name": "Bombay House",
+      "cuisine": [
+        "North Indian"
+      ],
+      "price": "₹₹",
+      "rating": 4.3,
+      "image": "ok.jpg",
+      "reviews": 128,
+      "author": "Aarav",
+      "address": "https://bookings.example.test/reservations/bombay-house-rooftop-grillZZZZZZZZZZZZZZZZZZZZZ",
+      "tags": [
+        "Outdoor seating"
+      ],
+      "review": "Great biryani, fast service."
+    },
+    "mustContain": [
+      "Bombay House",
+      "₹₹",
+      "North Indian",
+      "https://bookings.example.test/reservations/bombay-house-rooftop-grillZZZZZZZZZZZZZZZZZZZZZ",
+      "Aarav"
+    ]
+  },
+  {
+    "id": "unbrokenCuisine",
+    "props": {
+      "name": "Bombay House",
+      "cuisine": [
+        "NorthIndianMughlaiAwadhiHyderabadiChettinadMalabarKonkani"
+      ],
+      "price": "₹₹",
+      "rating": 4.3,
+      "image": "ok.jpg",
+      "reviews": 128,
+      "author": "Aarav",
+      "address": "12 Linking Road, Bandra West",
+      "tags": [
+        "Outdoor seating"
+      ],
+      "review": "Great biryani, fast service."
+    },
+    "mustContain": [
+      "Bombay House",
+      "₹₹",
+      "NorthIndianMughlaiAwadhiHyderabadiChettinadMalabarKonkani",
+      "12 Linking Road, Bandra West",
+      "Aarav"
+    ]
+  },
+  {
+    "id": "unbrokenAuthor",
+    "props": {
+      "name": "Bombay House",
+      "cuisine": [
+        "North Indian"
+      ],
+      "price": "₹₹",
+      "rating": 4.3,
+      "image": "ok.jpg",
+      "reviews": 128,
+      "author": "@aaravqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq",
+      "address": "12 Linking Road, Bandra West",
+      "tags": [
+        "Outdoor seating"
+      ],
+      "review": "Great biryani, fast service."
+    },
+    "mustContain": [
+      "Bombay House",
+      "₹₹",
+      "North Indian",
+      "12 Linking Road, Bandra West",
+      "@aaravqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq"
+    ]
+  },
+  {
+    "id": "rtlName",
+    "props": {
+      "name": "مطعم برج الحمام الشهير في مدينة دبي القديمة",
+      "cuisine": [
+        "North Indian"
+      ],
+      "price": "₹₹",
+      "rating": 4.3,
+      "image": "ok.jpg",
+      "reviews": 128,
+      "author": "Aarav",
+      "address": "شارع الشيخ زايد، بناية رقم ٤٢، دبي",
+      "tags": [
+        "Outdoor seating"
+      ],
+      "review": "Great biryani, fast service."
+    },
+    "mustContain": [
+      "مطعم برج الحمام الشهير في مدينة دبي القديمة",
+      "₹₹",
+      "North Indian",
+      "شارع الشيخ زايد، بناية رقم ٤٢، دبي",
+      "Aarav"
+    ]
+  },
+  {
+    "id": "bidiMixed",
+    "props": {
+      "name": "مطعم Bombay House رقم 42 — بيت بومباي",
+      "cuisine": [
+        "North Indian"
+      ],
+      "price": "₹₹",
+      "rating": 4.3,
+      "image": "ok.jpg",
+      "reviews": 128,
+      "author": "Aarav",
+      "address": "شارع الشيخ زايد، بناية رقم ٤٢، دبي",
+      "tags": [
+        "Outdoor seating"
+      ],
+      "review": "Great biryani, fast service."
+    },
+    "mustContain": [
+      "مطعم Bombay House رقم 42 — بيت بومباي",
+      "₹₹",
+      "North Indian",
+      "شارع الشيخ زايد، بناية رقم ٤٢، دبي",
+      "Aarav"
+    ]
+  },
+  {
+    "id": "emojiName",
+    "props": {
+      "name": "🍜🥟🍡🧋🍢🍤🍥🥠🍘🍙🍚🍛🍝🍞🍟 👨‍👩‍👧‍👦 👋🏽",
+      "cuisine": [
+        "North Indian"
+      ],
+      "price": "₹₹",
+      "rating": 4.3,
+      "image": "ok.jpg",
+      "reviews": 128,
+      "author": "Aarav",
+      "address": "12 Linking Road, Bandra West",
+      "tags": [
+        "Outdoor seating"
+      ],
+      "review": "Great biryani, fast service."
+    },
+    "mustContain": [
+      "🍜🥟🍡🧋🍢🍤🍥🥠🍘🍙🍚🍛🍝🍞🍟 👨‍👩‍👧‍👦 👋🏽",
+      "₹₹",
+      "North Indian",
+      "12 Linking Road, Bandra West",
+      "Aarav"
+    ]
+  },
+  {
+    "id": "combiningName",
+    "props": {
+      "name": "Ŕ̈é̈ś̈t́̈á̈ú̈ŕ̈á̈ń̈t́̈ Ć̈á̈f́̈é̈ B́̈í̈ś̈t́̈ŕ̈ó̈",
+      "cuisine": [
+        "North Indian"
+      ],
+      "price": "₹₹",
+      "rating": 4.3,
+      "image": "ok.jpg",
+      "reviews": 128,
+      "author": "Aarav",
+      "address": "12 Linking Road, Bandra West",
+      "tags": [
+        "Outdoor seating"
+      ],
+      "review": "Great biryani, fast service."
+    },
+    "mustContain": [
+      "Ŕ̈é̈ś̈t́̈á̈ú̈ŕ̈á̈ń̈t́̈ Ć̈á̈f́̈é̈ B́̈í̈ś̈t́̈ŕ̈ó̈",
+      "₹₹",
+      "North Indian",
+      "12 Linking Road, Bandra West",
+      "Aarav"
+    ]
+  },
+  {
+    "id": "falsyReal",
+    "props": {
+      "name": "Bombay House",
+      "cuisine": [
+        "North Indian"
+      ],
+      "price": "0",
+      "rating": 0,
+      "image": "ok.jpg",
+      "reviews": 0,
+      "author": "Aarav",
+      "address": "12 Linking Road, Bandra West",
+      "tags": [
+        "Outdoor seating"
+      ],
+      "review": "Great biryani, fast service."
+    },
+    "mustContain": [
+      "Bombay House",
+      "0",
+      "North Indian",
+      "12 Linking Road, Bandra West",
+      "Aarav"
+    ]
+  },
+  {
+    "id": "nullEverything",
+    "props": {
+      "name": "Bombay House",
+      "cuisine": null,
+      "price": "₹₹",
+      "rating": null,
+      "image": null,
+      "reviews": null,
+      "author": null,
+      "address": "12 Linking Road, Bandra West",
+      "tags": null,
+      "review": null
+    },
+    "mustContain": [
+      "Bombay House",
+      "₹₹",
+      "12 Linking Road, Bandra West"
     ]
   },
   {
@@ -188,12 +504,169 @@
       "rating": 4.3,
       "image": null,
       "reviews": 128,
-      "author": null
+      "author": null,
+      "address": "12 Linking Road, Bandra West",
+      "tags": [
+        "Outdoor seating"
+      ],
+      "review": "Great biryani, fast service."
     },
     "mustContain": [
       "The Absolutely Enormous Roof-Top Family Restaurant & Grill House Deluxe",
       "₹0",
-      "North Indian"
+      "North Indian",
+      "12 Linking Road, Bandra West"
+    ]
+  },
+  {
+    "id": "stacked-unbreakable",
+    "props": {
+      "name": "BombayHouseRooftopGrillAndFamilyDiningExperienceDeluxeMultiCuisineKitchenXXXXXXXXXXXXXXXXX",
+      "cuisine": [
+        "North Indian",
+        "Mughlai",
+        "Chinese",
+        "Continental",
+        "Thai",
+        "Dessert"
+      ],
+      "price": "₹0",
+      "rating": null,
+      "image": null,
+      "reviews": 128,
+      "author": "Aarav",
+      "address": "https://bookings.example.test/reservations/bombay-house-rooftop-grillZZZZZZZZZZZZZZZZZZZZZ",
+      "tags": [
+        "Outdoor seating"
+      ],
+      "review": "Great biryani, fast service."
+    },
+    "mustContain": [
+      "BombayHouseRooftopGrillAndFamilyDiningExperienceDeluxeMultiCuisineKitchenXXXXXXXXXXXXXXXXX",
+      "₹0",
+      "North Indian",
+      "https://bookings.example.test/reservations/bombay-house-rooftop-grillZZZZZZZZZZZZZZZZZZZZZ",
+      "Aarav"
+    ]
+  },
+  {
+    "id": "stacked-nested",
+    "props": {
+      "name": "BombayHouseRooftopGrillAndFamilyDiningExperienceDeluxeMultiCuisineKitchenXXXXXXXXXXXXXXXXX",
+      "cuisine": [
+        "North Indian",
+        "Mughlai",
+        "Chinese",
+        "Continental",
+        "Thai",
+        "Dessert"
+      ],
+      "price": "₹₹",
+      "rating": 4.3,
+      "image": "ok.jpg",
+      "reviews": 128,
+      "author": "@aaravqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq",
+      "address": "https://bookings.example.test/reservations/bombay-house-rooftop-grillZZZZZZZZZZZZZZZZZZZZZ",
+      "tags": [
+        "Outdoor seating"
+      ],
+      "review": "Great biryani, fast service."
+    },
+    "mustContain": [
+      "BombayHouseRooftopGrillAndFamilyDiningExperienceDeluxeMultiCuisineKitchenXXXXXXXXXXXXXXXXX",
+      "₹₹",
+      "North Indian",
+      "https://bookings.example.test/reservations/bombay-house-rooftop-grillZZZZZZZZZZZZZZZZZZZZZ",
+      "@aaravqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq"
+    ]
+  },
+  {
+    "id": "stacked-rtl",
+    "props": {
+      "name": "مطعم برج الحمام الشهير في مدينة دبي القديمة",
+      "cuisine": [
+        "North Indian",
+        "Mughlai",
+        "Chinese",
+        "Continental",
+        "Thai",
+        "Dessert"
+      ],
+      "price": "₹0",
+      "rating": 4.3,
+      "image": null,
+      "reviews": 128,
+      "author": "Aarav",
+      "address": "شارع الشيخ زايد، بناية رقم ٤٢، دبي",
+      "tags": [
+        "Outdoor seating"
+      ],
+      "review": "Great biryani, fast service."
+    },
+    "mustContain": [
+      "مطعم برج الحمام الشهير في مدينة دبي القديمة",
+      "₹0",
+      "North Indian",
+      "شارع الشيخ زايد، بناية رقم ٤٢، دبي",
+      "Aarav"
+    ]
+  },
+  {
+    "id": "stacked-emoji",
+    "props": {
+      "name": "🍜🥟🍡🧋🍢🍤🍥🥠🍘🍙🍚🍛🍝🍞🍟 👨‍👩‍👧‍👦 👋🏽",
+      "cuisine": [
+        "🍜 Ramen",
+        "Mughlai",
+        "Chinese",
+        "Continental"
+      ],
+      "price": "0",
+      "rating": 0,
+      "image": "ok.jpg",
+      "reviews": 0,
+      "author": "@aaravqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq",
+      "address": "12 Linking Road, Bandra West",
+      "tags": [
+        "Outdoor seating"
+      ],
+      "review": "Great biryani, fast service."
+    },
+    "mustContain": [
+      "🍜🥟🍡🧋🍢🍤🍥🥠🍘🍙🍚🍛🍝🍞🍟 👨‍👩‍👧‍👦 👋🏽",
+      "0",
+      "🍜 Ramen",
+      "12 Linking Road, Bandra West",
+      "@aaravqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq"
+    ]
+  },
+  {
+    "id": "stacked-everything",
+    "props": {
+      "name": "BombayHouseRooftopGrillAndFamilyDiningExperienceDeluxeMultiCuisineKitchenXXXXXXXXXXXXXXXXX",
+      "cuisine": [
+        "NorthIndianMughlaiAwadhiHyderabadiChettinadMalabarKonkani"
+      ],
+      "price": "0",
+      "rating": null,
+      "image": null,
+      "reviews": 0,
+      "author": "Aarav",
+      "address": "https://bookings.example.test/reservations/bombay-house-rooftop-grillZZZZZZZZZZZZZZZZZZZZZ",
+      "tags": [
+        "Outdoor seating",
+        "Late night",
+        "Family friendly",
+        "Rooftop"
+      ],
+      "review": "Great biryani, fast service."
+    },
+    "mustContain": [
+      "BombayHouseRooftopGrillAndFamilyDiningExperienceDeluxeMultiCuisineKitchenXXXXXXXXXXXXXXXXX",
+      "0",
+      "NorthIndianMughlaiAwadhiHyderabadiChettinadMalabarKonkani",
+      "https://bookings.example.test/reservations/bombay-house-rooftop-grillZZZZZZZZZZZZZZZZZZZZZ",
+      "Aarav"
     ]
   }
 ]

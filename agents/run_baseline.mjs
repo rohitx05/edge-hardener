@@ -7,14 +7,19 @@
 // agent. What it does NOT get is the harness: it never sees a failing assertion and never
 // re-runs the oracle. That single difference is the thing being measured.
 
-import { MODEL, EFFORT, callModel, extractCode, read, write, trajectory } from './_shared.mjs';
+import {
+  MODEL, EFFORT, callModel, extractCode, read, write, trajectory, propContract,
+} from './_shared.mjs';
 
 const COMPONENT = process.env.COMPONENT || 'corpus/restaurant-card.mjs';
 const OUT = process.env.OUT || 'results/baseline-card.mjs';
+const CASES = process.env.CASES || 'results/cases.json';
 
 const traj = trajectory('baseline');
 const instruction = read('agents/baseline.md');
 const source = read(COMPONENT);
+// Same data contract the advanced agent gets — see propContract() for why.
+const contract = propContract(JSON.parse(read(CASES)));
 
 const system = `${instruction}
 
@@ -26,6 +31,11 @@ const user = `Component file: ${COMPONENT}
 \`\`\`js
 ${source}
 \`\`\`
+
+DATA CONTRACT — render(props) is called with these props:
+${contract.join(', ')}
+The starting file ignores some of them. Every prop that has a value must be rendered and
+must stay visible; a prop that is null/absent needs a sensible empty state.
 
 Rewrite this file so it survives adversarial data: absurdly long names, empty arrays, many
 array items, "₹0" and other falsy-looking-but-real values, null image, null rating, null
