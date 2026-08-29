@@ -1,0 +1,12 @@
+node_modules/
+
+# Everything under results/ is evidence, not scratch: cases.json is the deterministic
+# corpus, comparison.json + *-run.json back every number in the writeup (rule #9), and the
+# *-card.mjs files are the hardened components themselves. All tracked on purpose.
+
+# Secrets — this repo has no API-key code path, but keep the door shut anyway.
+.env
+.env.*
+
+# Scratch files from local probing.
+*.tmp.mjs

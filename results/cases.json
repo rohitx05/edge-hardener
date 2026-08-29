@@ -1,0 +1,199 @@
+[
+  {
+    "id": "longName",
+    "props": {
+      "name": "The Absolutely Enormous Roof-Top Family Restaurant & Grill House Deluxe",
+      "cuisine": [
+        "North Indian"
+      ],
+      "price": "₹₹",
+      "rating": 4.3,
+      "image": "ok.jpg",
+      "reviews": 128,
+      "author": "Aarav"
+    },
+    "mustContain": [
+      "The Absolutely Enormous Roof-Top Family Restaurant & Grill House Deluxe",
+      "₹₹",
+      "North Indian"
+    ]
+  },
+  {
+    "id": "emptyCuisine",
+    "props": {
+      "name": "Bombay House",
+      "cuisine": [],
+      "price": "₹₹",
+      "rating": 4.3,
+      "image": "ok.jpg",
+      "reviews": 128,
+      "author": "Aarav"
+    },
+    "mustContain": [
+      "Bombay House",
+      "₹₹"
+    ]
+  },
+  {
+    "id": "manyCuisine",
+    "props": {
+      "name": "Bombay House",
+      "cuisine": [
+        "North Indian",
+        "Mughlai",
+        "Chinese",
+        "Continental",
+        "Thai",
+        "Dessert"
+      ],
+      "price": "₹₹",
+      "rating": 4.3,
+      "image": "ok.jpg",
+      "reviews": 128,
+      "author": "Aarav"
+    },
+    "mustContain": [
+      "Bombay House",
+      "₹₹",
+      "North Indian"
+    ]
+  },
+  {
+    "id": "zeroPrice",
+    "props": {
+      "name": "Bombay House",
+      "cuisine": [
+        "North Indian"
+      ],
+      "price": "₹0",
+      "rating": 4.3,
+      "image": "ok.jpg",
+      "reviews": 128,
+      "author": "Aarav"
+    },
+    "mustContain": [
+      "Bombay House",
+      "₹0",
+      "North Indian"
+    ]
+  },
+  {
+    "id": "noImage",
+    "props": {
+      "name": "Bombay House",
+      "cuisine": [
+        "North Indian"
+      ],
+      "price": "₹₹",
+      "rating": 4.3,
+      "image": null,
+      "reviews": 128,
+      "author": "Aarav"
+    },
+    "mustContain": [
+      "Bombay House",
+      "₹₹",
+      "North Indian"
+    ]
+  },
+  {
+    "id": "noRating",
+    "props": {
+      "name": "Bombay House",
+      "cuisine": [
+        "North Indian"
+      ],
+      "price": "₹₹",
+      "rating": null,
+      "image": "ok.jpg",
+      "reviews": 128,
+      "author": "Aarav"
+    },
+    "mustContain": [
+      "Bombay House",
+      "₹₹",
+      "North Indian"
+    ]
+  },
+  {
+    "id": "zeroReviews",
+    "props": {
+      "name": "Bombay House",
+      "cuisine": [
+        "North Indian"
+      ],
+      "price": "₹₹",
+      "rating": 4.3,
+      "image": "ok.jpg",
+      "reviews": 0,
+      "author": "Aarav"
+    },
+    "mustContain": [
+      "Bombay House",
+      "₹₹",
+      "North Indian"
+    ]
+  },
+  {
+    "id": "noAuthor",
+    "props": {
+      "name": "Bombay House",
+      "cuisine": [
+        "North Indian"
+      ],
+      "price": "₹₹",
+      "rating": 4.3,
+      "image": "ok.jpg",
+      "reviews": 128,
+      "author": null
+    },
+    "mustContain": [
+      "Bombay House",
+      "₹₹",
+      "North Indian"
+    ]
+  },
+  {
+    "id": "unicodeName",
+    "props": {
+      "name": "🍜 café— naïve “Ræstaurant” 北京烤鸭",
+      "cuisine": [
+        "North Indian"
+      ],
+      "price": "₹₹",
+      "rating": 4.3,
+      "image": "ok.jpg",
+      "reviews": 128,
+      "author": "Aarav"
+    },
+    "mustContain": [
+      "🍜 café— naïve “Ræstaurant” 北京烤鸭",
+      "₹₹",
+      "North Indian"
+    ]
+  },
+  {
+    "id": "stacked-nightmare",
+    "props": {
+      "name": "The Absolutely Enormous Roof-Top Family Restaurant & Grill House Deluxe",
+      "cuisine": [
+        "North Indian",
+        "Mughlai",
+        "Chinese",
+        "Continental",
+        "Thai",
+        "Dessert"
+      ],
+      "price": "₹0",
+      "rating": 4.3,
+      "image": null,
+      "reviews": 128,
+      "author": null
+    },
+    "mustContain": [
+      "The Absolutely Enormous Roof-Top Family Restaurant & Grill House Deluxe",
+      "₹0",
+      "North Indian"
+    ]
+  }
+]

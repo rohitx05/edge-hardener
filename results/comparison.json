@@ -1,0 +1,82 @@
+{
+  "cases": "results/cases.json",
+  "generated_at": "2026-08-29T16:03:15.503Z",
+  "corpus_lines": 35,
+  "variants": {
+    "fragile_floor": {
+      "label": "Fragile floor (unpatched)",
+      "component": "corpus/restaurant-card.mjs",
+      "survival_rate": "50.0%",
+      "pass": 15,
+      "total": 30,
+      "lines": 35,
+      "lines_vs_corpus": 0,
+      "fails": [
+        "longName:mobile:overflow",
+        "longName:tablet:overflow",
+        "longName:desktop:overflow",
+        "noImage:mobile:console-error",
+        "noImage:tablet:console-error",
+        "noImage:desktop:console-error",
+        "noRating:mobile:crash",
+        "noRating:tablet:crash",
+        "noRating:desktop:crash",
+        "unicodeName:mobile:overflow",
+        "unicodeName:tablet:overflow",
+        "unicodeName:desktop:overflow",
+        "stacked-nightmare:mobile:console-error",
+        "stacked-nightmare:tablet:console-error",
+        "stacked-nightmare:desktop:console-error"
+      ]
+    },
+    "baseline": {
+      "label": "Baseline (one-shot)",
+      "component": "results/baseline-card.mjs",
+      "survival_rate": "100.0%",
+      "pass": 30,
+      "total": 30,
+      "lines": 409,
+      "lines_vs_corpus": 374,
+      "fails": []
+    },
+    "agent": {
+      "label": "Advanced (verify-fix loop)",
+      "component": "results/agent-card.mjs",
+      "survival_rate": "100.0%",
+      "pass": 30,
+      "total": 30,
+      "lines": 104,
+      "lines_vs_corpus": 69,
+      "fails": []
+    }
+  },
+  "baseline_run": {
+    "model": "claude-opus-5",
+    "calls": 1,
+    "usage": {
+      "input_tokens": 2,
+      "output_tokens": 6292,
+      "cache_read_input_tokens": 3795,
+      "cache_creation_input_tokens": 1801,
+      "cost_usd": 0.1787715
+    },
+    "seconds": 67.3
+  },
+  "agent_run": {
+    "model": "claude-opus-5",
+    "iterations": 1,
+    "model_calls": 1,
+    "stop_reason": "survival-100%",
+    "dead_patches": 0,
+    "usage": {
+      "input_tokens": 2,
+      "output_tokens": 2060,
+      "cache_read_input_tokens": 3795,
+      "cache_creation_input_tokens": 2925,
+      "cost_usd": 0.0848165
+    },
+    "seconds": 28.9
+  },
+  "delta_floor_to_agent": "50.0 pts",
+  "delta_baseline_to_agent": "0.0 pts"
+}

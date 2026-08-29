@@ -1,0 +1,15 @@
+{
+  "name": "edge-hardener",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "cases": "node eval/generate_cases.mjs > results/cases.json",
+    "floor": "node eval/harness.mjs --component corpus/restaurant-card.mjs --cases results/cases.json",
+    "baseline": "node agents/run_baseline.mjs && node eval/harness.mjs --component results/baseline-card.mjs --cases results/cases.json > results/baseline.json",
+    "agent": "node agents/run_advanced.mjs && node eval/harness.mjs --component results/agent-card.mjs --cases results/cases.json > results/agent.json",
+    "compare": "node eval/compare.mjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.47.0"
+  }
+}
