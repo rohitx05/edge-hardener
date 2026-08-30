@@ -1,0 +1,776 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Breakage at 320px</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+/* ── tokens ───────────────────────────────────────────────────────────────────────────
+   A cool grey-blue spec-sheet ground, white product surfaces, one crimson for the thing
+   that matters (crossing the container edge), one teal for a clean render. Committed to a
+   single light world; every color is painted explicitly. */
+:root {
+  color-scheme: light;
+
+  --ground:    #E3E6E9;
+  --surface:   #FFFFFF;
+
+  --ink:       #11151A;
+  --ink-2:     #59636D;
+  --ink-3:     #8A939B;
+
+  --rule:      #C3CAD1;
+  --rule-soft: #D3D9DE;
+
+  --fail:      #B7202F;
+  --fail-wash: #B7202F14;
+  --pass:      #12564A;
+
+  --sans: "Archivo", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --mono: "JetBrains Mono", "Cascadia Mono", Consolas, ui-monospace, monospace;
+
+  --col: 190px;          /* case rail */
+  --gut: 26px;
+  --gap: 18px;
+  --ctlh: 96px;          /* measured at runtime; column heads stick below the controls */
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.55;
+  font-synthesis-weight: none;
+}
+
+a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--rule);
+  text-underline-offset: 3px;
+}
+a:hover { text-decoration-color: var(--fail); }
+a:focus-visible { outline: 2px solid var(--fail); outline-offset: 2px; }
+
+code { font-family: var(--mono); font-size: .88em; color: var(--ink); }
+
+.wrap { max-width: 1520px; margin: 0 auto; padding: 0 var(--gut); }
+
+/* ── masthead ─────────────────────────────────────────────────────────────────────── */
+
+.masthead { padding: 66px 0 0; }
+
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  margin: 0 0 24px;
+}
+.eyebrow span { color: var(--ink-3); }
+
+h1 {
+  margin: 0;
+  font-size: clamp(36px, 4.2vw, 58px);
+  font-weight: 800;
+  line-height: .99;
+  letter-spacing: -.032em;
+  max-width: 17ch;
+  text-wrap: balance;
+}
+
+.deck {
+  margin: 24px 0 0;
+  max-width: 62ch;
+  font-size: 16.5px;
+  line-height: 1.62;
+  color: var(--ink-2);
+}
+.deck strong { color: var(--ink); font-weight: 600; }
+
+/* ── scored battery ───────────────────────────────────────────────────────────────── */
+
+.figures {
+  display: grid;
+  grid-template-columns: var(--col) repeat(3, minmax(0, 1fr));
+  gap: 0 var(--gap);
+  margin-top: 52px;
+  border-top: 1px solid var(--ink);
+  padding-top: 18px;
+}
+.fig-rail {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  padding-top: 4px;
+}
+.fig { border-left: 1px solid var(--rule); padding: 2px 0 6px 18px; }
+.fig:first-of-type { border-left: 0; padding-left: 0; }
+
+.fig-name {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+.fig-num {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: -.03em;
+  line-height: 1.15;
+  color: var(--ink);
+  display: block;
+}
+.fig.is-best .fig-num { color: var(--pass); }
+.fig.is-floor .fig-num { color: var(--fail); }
+.fig-sub {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-2);
+  font-variant-numeric: tabular-nums;
+}
+.fig-sub b { font-weight: 500; color: var(--ink); }
+
+.source {
+  grid-column: 1 / -1;
+  margin-top: 20px;
+  padding-top: 12px;
+  border-top: 1px solid var(--rule-soft);
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-2);
+}
+.source b { font-weight: 700; color: var(--ink); }
+.source a { color: var(--ink); }
+.source.cont { margin-top: 7px; padding-top: 0; border-top: 0; }
+
+/* ── controls: the width tabs and the live readout ────────────────────────────────── */
+
+.controls {
+  position: sticky; top: 0; z-index: 20;
+  background: var(--ground);
+  margin-top: 54px;
+  border-top: 1px solid var(--ink);
+  padding: 16px 0 0;
+  display: flex; flex-wrap: wrap; gap: 24px 34px; align-items: flex-end;
+}
+
+.ctl { display: flex; flex-direction: column; gap: 9px; }
+.ctl-label {
+  font-family: var(--mono); font-size: 11.5px; font-weight: 500;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--ink-2);
+}
+
+/* A tab strip: every tab sits on a shared hairline, the current one owns a solid ink rule.
+   Crimson stays reserved for failure, so selection is carried by ink weight and the rule. */
+.seg { display: inline-flex; gap: 0; box-shadow: inset 0 -1px 0 var(--rule); }
+.seg button {
+  background: none; border: 0; cursor: pointer;
+  padding: 7px 15px 9px;
+  font-family: var(--mono); font-size: 12.5px; font-weight: 500;
+  letter-spacing: .04em; color: var(--ink-2);
+  border-bottom: 2px solid transparent;
+  transition: color .1s linear, border-color .1s linear, background-color .1s linear;
+}
+.seg button .px { color: var(--ink-3); }
+.seg button:hover:not([aria-pressed="true"]) {
+  color: var(--ink);
+  background: var(--rule-soft);
+  border-bottom-color: var(--rule);
+}
+.seg button:hover:not([aria-pressed="true"]) .px { color: var(--ink-2); }
+.seg button[aria-pressed="true"] {
+  color: var(--ink); font-weight: 700;
+  border-bottom-color: var(--ink);
+}
+.seg button[aria-pressed="true"] .px { color: var(--ink-2); }
+.seg button:focus-visible { outline: 2px solid var(--fail); outline-offset: -2px; }
+
+/* The readout. Same figure treatment as the scored strip above, one step smaller, so it
+   reads as a live instrument rather than a caption. */
+.tallies { display: flex; gap: 0; margin-left: auto; align-items: flex-end; }
+.tally { padding: 0 20px; border-left: 1px solid var(--rule); }
+.tally:first-child { border-left: 0; }
+.tally:last-child { padding-right: 0; }
+.tally-name {
+  display: block;
+  font-family: var(--mono); font-size: 11px; font-weight: 700;
+  letter-spacing: .13em; text-transform: uppercase; color: var(--ink-2);
+}
+.tally-n {
+  display: block; margin-top: 2px;
+  font-family: var(--mono); font-variant-numeric: tabular-nums;
+  font-size: 25px; font-weight: 700; letter-spacing: -.02em; line-height: 1.12;
+  color: var(--ink);
+}
+.tally.good .tally-n { color: var(--pass); }
+.tally.bad  .tally-n { color: var(--fail); }
+
+.legend {
+  display: flex; gap: 22px; flex-wrap: wrap;
+  padding: 14px 0;
+  font-family: var(--mono); font-size: 11.5px; color: var(--ink-2);
+  border-bottom: 1px solid var(--rule-soft);
+}
+.legend span { display: inline-flex; align-items: center; gap: 7px; }
+.swatch { width: 22px; height: 12px; display: inline-block; flex: none; }
+.swatch.ov { outline: 1.5px solid var(--fail); outline-offset: -1px; background: var(--fail-wash); }
+.swatch.ok { background: var(--pass); }
+.swatch.sw-edge { width: 0; height: 14px; border-left: 1.5px dashed var(--fail); }
+
+/* ── grid ─────────────────────────────────────────────────────────────────────────── */
+
+main { padding: 0 0 70px; }
+.grid { display: grid; gap: 32px var(--gap); align-items: start; }
+
+.colhead {
+  position: sticky; top: var(--ctlh); z-index: 10;
+  background: var(--ground);
+  padding: 12px 0;
+  border-bottom: 1px solid var(--ink);
+}
+.colhead b {
+  font-family: var(--mono); font-size: 12px; font-weight: 700;
+  letter-spacing: .13em; text-transform: uppercase; color: var(--ink);
+}
+.colhead div {
+  font-family: var(--mono); font-size: 11.5px; color: var(--ink-2);
+  margin-top: 3px; overflow-wrap: anywhere;
+}
+
+/* One hairline across the whole row: every item in the row carries the same top rule. */
+.caselabel, .cell { border-top: 1px solid var(--rule); padding-top: 22px; }
+
+.caselabel .id {
+  font-family: var(--mono); font-size: 13.5px; font-weight: 700;
+  color: var(--ink); overflow-wrap: anywhere;
+}
+.caselabel .why {
+  margin-top: 8px; font-size: 13.5px; line-height: 1.5;
+  color: var(--ink-2); max-width: 32ch;
+}
+
+/* No panel, no card chrome — the rendered component is the only surface on the page. */
+.cell { background: none; border-radius: 0; }
+
+.badge {
+  display: flex; align-items: baseline; gap: 8px;
+  font-family: var(--mono); font-size: 12px; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase;
+  padding: 0; border-radius: 0; background: none;
+}
+.badge.pass { color: var(--pass); }
+.badge.fail { color: var(--fail); }
+.badge svg { flex: none; transform: translateY(2px); }
+.badge .rule { flex: 1; height: 1px; background: currentColor; opacity: .28; transform: translateY(-4px); }
+
+/* The viewport window: spill is never clipped, it scrolls inside its own cell. */
+.window { overflow-x: auto; overflow-y: hidden; padding-bottom: 10px; }
+.frame { position: relative; width: max-content; padding: 22px 0 18px; }
+
+.host {
+  border: 1px solid var(--rule);
+  background: var(--surface);
+  color: #111;
+  box-sizing: border-box;
+  /* An unstyled document, exactly like the harness page — so the geometry measured here
+     is the geometry the harness measured. */
+  font: initial;
+}
+.host * { margin: 0; }
+
+/* The boundary. The line content may not cross. It runs clear of the card top and bottom
+   so it reads as a measurement rather than a border, and its label sits inside the host so
+   a narrow column can never clip it away. */
+.edge {
+  position: absolute;
+  top: 0; bottom: 0; width: 0;
+  border-left: 1.5px dashed var(--fail);
+  pointer-events: none;
+}
+.edge::before {
+  content: attr(data-w);
+  position: absolute;
+  top: 2px; right: 4px;
+  width: max-content;
+  font-family: var(--mono);
+  font-size: 10.5px; font-weight: 700; letter-spacing: .12em;
+  color: var(--fail);
+  line-height: 1.6;
+}
+
+/* Measured overflow — set from JS, never hardcoded. */
+.host .ov {
+  outline: 1.5px solid var(--fail) !important;
+  outline-offset: -1px;
+  background: var(--fail-wash);
+}
+
+.note {
+  margin-top: 14px;
+  font-size: 13.5px; line-height: 1.5;
+  color: var(--ink-2); max-width: 44ch;
+}
+.note + .note { margin-top: 7px; }
+.note b { font-weight: 600; color: var(--ink); }
+.note .m { font-family: var(--mono); font-size: 12.5px; overflow-wrap: anywhere; }
+
+/* ── footer ───────────────────────────────────────────────────────────────────────── */
+
+footer { border-top: 1px solid var(--ink); padding: 20px 0 90px; }
+.foot { display: grid; grid-template-columns: var(--col) repeat(3, minmax(0, 1fr)); gap: 0 var(--gap); }
+.foot-label {
+  font-family: var(--mono); font-size: 11.5px; font-weight: 500;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2);
+}
+.foot-body {
+  grid-column: 2 / -1;
+  font-size: 13.5px; line-height: 1.6; color: var(--ink-2); max-width: 76ch;
+}
+.foot-body p { margin: 0 0 10px; }
+.foot-body p:last-child { margin-bottom: 0; }
+
+@media (max-width: 1180px) {
+  :root { --col: 150px; --gut: 18px; }
+  .fig-num { font-size: 32px; }
+  .tally-n { font-size: 21px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .seg button { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <p class="eyebrow">Edge Hardener <span>/</span> restaurant card <span>/</span> adversarial battery</p>
+    <h1>Three versions of one card, measured live.</h1>
+    <p class="deck">
+      The same component, hardened three ways, rendered from the files in this repo and handed
+      the worst rows in the test corpus. The dashed line is the container edge. Every red
+      outline below is measured in your browser right now with the same rule
+      <code>eval/harness.mjs</code> uses — an element whose right edge passes the container, or
+      that scrolls inside itself. <strong>Nothing here is a screenshot, and nothing is
+      hardcoded.</strong>
+    </p>
+
+    <section class="figures" id="figures" aria-label="Survival rate and file size by version">
+      <div class="fig-rail">Scored<br>battery</div>
+      <div class="fig"><span class="fig-num">—</span></div>
+      <div class="fig"><span class="fig-num">—</span></div>
+      <div class="fig"><span class="fig-num">—</span></div>
+      <p class="source">Loading results/comparison-haiku.json…</p>
+    </section>
+  </header>
+
+  <div class="controls" id="controls">
+    <div class="ctl">
+      <span class="ctl-label" id="vpLabel">Viewport</span>
+      <div class="seg" id="vpSeg" role="group" aria-labelledby="vpLabel"></div>
+    </div>
+    <div class="tallies" id="tallies" aria-live="polite"></div>
+  </div>
+
+  <div class="legend">
+    <span><i class="swatch ov"></i> element overflowed its container</span>
+    <span><i class="swatch ok"></i> survives: no crash, no overflow, content still present</span>
+    <span><i class="swatch sw-edge"></i> container edge</span>
+    <span>host width = min(viewport, 420px), same as the harness</span>
+  </div>
+
+  <main>
+    <div class="grid" id="grid"></div>
+  </main>
+
+  <footer>
+    <div class="foot">
+      <div class="foot-label">Provenance</div>
+      <div class="foot-body" id="prov"></div>
+    </div>
+  </footer>
+
+</div>
+
+<script type="module">
+/* ─────────────────────────────────────────────────────────────────────────────────────
+   This page imports the three component files and renders them. It never writes, never
+   calls a model, and never invents a number: the figures come from the committed
+   comparison JSON, and every verdict is measured on the DOM it just built.
+   ───────────────────────────────────────────────────────────────────────────────────── */
+
+const VERSIONS = [
+  { key: 'fragile',  label: 'Fragile',  file: 'corpus/restaurant-card.mjs', url: '/corpus/restaurant-card.mjs' },
+  { key: 'baseline', label: 'Baseline', file: 'results/baseline-card.mjs',  url: '/results/baseline-card.mjs' },
+  { key: 'agent',    label: 'Agent',    file: 'results/agent-card.mjs',     url: '/results/agent-card.mjs' },
+];
+
+// The hardest slice of the battery: one from each failure family the harness reports.
+const PICKS = [
+  { id: 'longName',           why: 'white-space:nowrap on a 70-char name' },
+  { id: 'unbrokenName',       why: 'no break opportunity anywhere in the string' },
+  { id: 'rtlName',            why: 'right-to-left Arabic name and address' },
+  { id: 'emojiName',          why: 'emoji, ZWJ family sequence, skin-tone modifier' },
+  { id: 'stacked-nightmare',  why: 'long name + 6 cuisines + null image + null author + ₹0' },
+  { id: 'stacked-everything', why: 'unbroken name + null rating + null image + long URL' },
+  // The two below are where the one-shot baseline actually recovers — without them the
+  // middle column looks identical to the fragile one and the story reads flatter than it is.
+  { id: 'noRating',           why: 'rating: null — the fragile card calls .toFixed() on it' },
+  { id: 'manyCuisine',        why: 'six cuisines; the fragile card renders only cuisine[0]' },
+];
+
+const VIEWPORTS = [
+  { name: 'mobile-sm', width: 320 },
+  { name: 'mobile',    width: 360 },
+  { name: 'tablet',    width: 768 },
+  { name: 'desktop',   width: 1280 },
+];
+let vpIndex = 0;   // default 320 — where the stacked cases break hardest
+
+const grid = document.getElementById('grid');
+const $ = (t, cls, txt) => { const e = document.createElement(t); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
+
+const [cases, cmp] = await Promise.all([
+  fetch('/results/cases.json').then((r) => r.json()),
+  fetch('/results/comparison-haiku.json').then((r) => r.json()),
+]);
+
+const mods = await Promise.all(VERSIONS.map(async (v) => {
+  try { return await import(v.url); }
+  catch (e) { return { __err: String(e && e.message || e) }; }
+}));
+
+/* Demo-layer only. Two of the three cards draw an empty state for `image: null`: the
+   Baseline builds a div that says "No image", the hardened card points an <img> at an
+   unlabelled grey SVG. Side by side, next to the fragile column's broken-image glyph, the
+   unlabelled one reads as content that got lost. This graphic replaces that placeholder so
+   both empty states are labelled the same way. It is swapped INSIDE the card's existing
+   80x80 <img>, whose width and height are set by the card, so no geometry moves and nothing
+   measured changes. It is applied only when cases.json says `image: null`, and only to a
+   src the card itself made a data: URI — a real image, or a broken one, is never touched. */
+const PLACEHOLDER_SVG = 'data:image/svg+xml,' + encodeURIComponent(
+  '<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80">' +
+  '<rect width="80" height="80" rx="4" fill="#f0f0f0"/>' +
+  '<text x="40" y="44" text-anchor="middle" font-family="sans-serif" font-size="12" ' +
+  'fill="#999">No image</text></svg>');
+
+function labelEmptyState(host, kase) {
+  if (kase.props.image != null) return;          // the case supplies an image — hands off
+  for (const im of host.querySelectorAll('img')) {
+    const src = im.getAttribute('src') || '';
+    if (!src.startsWith('data:image/svg+xml')) continue;   // real src, or the fragile 404
+    im.src = PLACEHOLDER_SVG;
+  }
+}
+
+const CHECK = '<svg width="11" height="11" viewBox="0 0 11 11" aria-hidden="true">' +
+  '<path d="M1 5.6 L4.1 8.7 L10 2.3" fill="none" stroke="currentColor" stroke-width="1.9" ' +
+  'stroke-linecap="square"/></svg>';
+
+/* ── the three checks, mirroring eval/harness.mjs ─────────────────────────────────────── */
+
+function findOverflowing(host) {
+  const hb = host.getBoundingClientRect();
+  return [...host.querySelectorAll('*')].filter((el) => {
+    const r = el.getBoundingClientRect();
+    return r.right > hb.right + 1 || el.scrollWidth > el.clientWidth + 1;
+  });
+}
+
+function findMissing(host, mustContain) {
+  const bad = [];
+  for (const s of mustContain || []) {
+    if (!s) continue;
+    const el = [...host.querySelectorAll('*')].find((n) => {
+      const full = (n.getAttribute?.('title') || n.getAttribute?.('aria-label') || n.textContent || '');
+      return full.includes(s);
+    });
+    if (!el) { bad.push({ s, why: 'absent' }); continue; }
+    const cs = getComputedStyle(el);
+    if (cs.display === 'none' || cs.visibility === 'hidden' || cs.opacity === '0')
+      bad.push({ s, why: 'hidden' });
+  }
+  return bad;
+}
+
+/** Wait for this cell's own image requests, and report any that failed — the harness's
+ *  console-error check, scoped to one card so a 404 is never charged to a neighbour. */
+function settleImages(host) {
+  const imgs = [...host.querySelectorAll('img')];
+  return Promise.all(imgs.map((im) => new Promise((res) => {
+    if (im.complete) return res(im.naturalWidth === 0 && im.getAttribute('src') != null);
+    im.addEventListener('load', () => res(false), { once: true });
+    im.addEventListener('error', () => res(true), { once: true });
+  }))).then((flags) => flags.some(Boolean));
+}
+
+/* ── plain-language explanation of a verdict, written from what was measured ───────── */
+
+function explain(verdict, over, hostWidth) {
+  if (verdict.reason === 'crash')
+    return ['The card threw before it rendered anything. ', verdict.detail, ''];
+  if (verdict.reason === 'console-error')
+    return ['The image request failed. The card asked the browser for ', 'null', ' and got a 404.'];
+  if (verdict.reason === 'overflow') {
+    const clipped = over.some((n) => getComputedStyle(n).textOverflow === 'ellipsis');
+    if (clipped)
+      return ['Clipped to one line. The full name survives only in the ', 'title', ' tooltip.'];
+    return [`${over.length} element${over.length > 1 ? 's' : ''} crossed the ${hostWidth}px edge.`, '', ''];
+  }
+  if (verdict.reason === 'content-lost')
+    return ['Rendered without breaking, but dropped required content: ', verdict.detail, ''];
+  if (verdict.reason === 'import-failed')
+    return ['The module could not be imported. ', verdict.detail, ''];
+  return ['Wraps, keeps every required value visible, and stays inside the box.', '', ''];
+}
+
+/* ── one cell ─────────────────────────────────────────────────────────────────────────── */
+
+async function renderCell(mod, kase, hostWidth, version) {
+  const cell = $('div', 'cell');
+  const badge = $('div', 'badge');
+  const win = $('div', 'window');
+  const frame = $('div', 'frame');
+  const host = $('div', 'host');
+  const edge = $('div', 'edge');
+
+  host.style.width = hostWidth + 'px';
+  edge.style.left = hostWidth + 'px';
+  edge.dataset.w = String(hostWidth);
+  frame.append(host, edge);
+  win.appendChild(frame);
+  cell.append(badge, win);
+
+  let verdict = null;
+
+  if (mod.__err) {
+    verdict = { pass: false, reason: 'import-failed', detail: mod.__err };
+  } else {
+    // (1) CRASH
+    try {
+      host.appendChild(mod.render(structuredClone(kase.props)));
+    } catch (e) {
+      verdict = { pass: false, reason: 'crash', detail: String(e && e.message || e) };
+    }
+  }
+
+  // Must be in the document before geometry means anything.
+  grid.appendChild(cell);
+
+  let over = [];
+  if (!verdict) {
+    labelEmptyState(host, kase);
+    const imgFailed = await settleImages(host);
+
+    // (2) OVERFLOW — outline the offenders regardless of which reason wins the verdict,
+    // because the outline is the whole point of this page.
+    over = findOverflowing(host);
+    for (const el of over) el.classList.add('ov');
+
+    // (3) CONTENT PRESENCE — the anti-gaming check.
+    const missing = findMissing(host, kase.mustContain);
+
+    if (imgFailed) verdict = { pass: false, reason: 'console-error' };
+    else if (over.length) verdict = { pass: false, reason: 'overflow' };
+    else if (missing.length) verdict = { pass: false, reason: 'content-lost',
+      detail: missing.map((m) => `${m.why} — ${JSON.stringify(m.s).slice(0, 48)}`).join('; ') };
+    else verdict = { pass: true, reason: 'clean' };
+  }
+
+  badge.classList.add(verdict.pass ? 'pass' : 'fail');
+  if (verdict.pass) badge.innerHTML = CHECK;
+  badge.append($('span', null, verdict.pass ? 'Survives' : verdict.reason.replace('-', ' ')));
+  badge.append($('span', 'rule'));
+
+  const [lead, mono, tail] = explain(verdict, over, hostWidth);
+  const note = $('p', 'note');
+  note.append(document.createTextNode(lead));
+  if (mono) note.append($('code', 'm', mono));
+  if (tail) note.append(document.createTextNode(tail));
+  cell.appendChild(note);
+
+  // A card with no image to load draws a grey block. In the hardened column that block is a
+  // deliberate empty state, and it looks near enough to the fragile column's broken-image
+  // glyph that a viewer can read it as a second failure. Say which it is.
+  const rendered = verdict.reason !== 'crash' && verdict.reason !== 'import-failed';
+  if (version?.key === 'agent' && kase.props.image == null && rendered) {
+    const state = $('p', 'note');
+    state.append($('b', null, 'Empty state. '), document.createTextNode('A placeholder for '));
+    state.append($('code', 'm', 'image: null'));
+    state.append(document.createTextNode(', not a dropped field. Labelled by this page to match the Baseline column — see below.'));
+    cell.appendChild(state);
+  }
+
+  return verdict;
+}
+
+/* ── the grid ─────────────────────────────────────────────────────────────────────────── */
+
+async function draw() {
+  const vp = VIEWPORTS[vpIndex];
+  const hostWidth = Math.min(vp.width, 420);
+
+  grid.innerHTML = '';
+  grid.style.gridTemplateColumns = `minmax(140px, var(--col)) repeat(3, minmax(${hostWidth + 46}px, 1fr))`;
+
+  grid.appendChild($('div', 'colhead'));
+  for (const v of VERSIONS) {
+    const h = $('div', 'colhead');
+    h.append($('b', null, v.label), $('div', null, v.file));
+    grid.appendChild(h);
+  }
+
+  const tally = Object.fromEntries(VERSIONS.map((v) => [v.key, 0]));
+
+  for (const pick of PICKS) {
+    const kase = cases.find((c) => c.id === pick.id);
+    const lab = $('div', 'caselabel');
+    lab.append($('div', 'id', pick.id), $('div', 'why', pick.why));
+    grid.appendChild(lab);
+
+    if (!kase) { grid.appendChild($('div', 'cell', `case "${pick.id}" not found in results/cases.json`)); continue; }
+
+    for (let i = 0; i < VERSIONS.length; i++) {
+      const verdict = await renderCell(mods[i], kase, hostWidth, VERSIONS[i]);
+      if (verdict.pass) tally[VERSIONS[i].key]++;
+    }
+  }
+
+  const t = document.getElementById('tallies');
+  t.innerHTML = '';
+  for (const v of VERSIONS) {
+    const n = tally[v.key], total = PICKS.length;
+    const el = $('div', 'tally ' + (n === total ? 'good' : n === 0 ? 'bad' : ''));
+    el.append($('span', 'tally-name', v.label), $('span', 'tally-n', `${n}/${total}`));
+    t.appendChild(el);
+  }
+}
+
+/* ── the scored battery, read straight out of the committed comparison file ─────────── */
+
+const V = cmp.variants;
+const figMap = { fragile: V.fragile_floor, baseline: V.baseline, agent: V.agent };
+const figures = document.getElementById('figures');
+figures.innerHTML = '';
+figures.appendChild(Object.assign($('div', 'fig-rail'), { innerHTML: 'Scored<br>battery' }));
+
+for (const v of VERSIONS) {
+  const f = figMap[v.key];
+  const box = $('div', 'fig' + (v.key === 'agent' ? ' is-best' : v.key === 'fragile' ? ' is-floor' : ''));
+  box.append($('div', 'fig-name', v.label), $('span', 'fig-num', f.survival_rate));
+  const sub = $('div', 'fig-sub');
+  sub.append($('b', null, `${f.pass}/${f.total}`), document.createTextNode(` pairs · ${f.lines} lines`));
+  box.appendChild(sub);
+  figures.appendChild(box);
+}
+
+// ── what the scored battery actually covers ──────────────────────────────────────────
+// The grid below shows one width at a time, so say plainly that the figures above span all
+// four. Viewport names come out of the committed fails, which are "case:viewport:reason";
+// the floor fails every pair, so its list names every viewport.
+const vpNames = [...new Set(V.fragile_floor.fails.map((f) => f.split(':')[1]))];
+const pairs = V.agent.total;
+const caseCount = pairs / vpNames.length;
+
+// Pixel widths live in the harness, not in the comparison file. Read them from the source
+// of record; if that shape ever changes, name the viewports without widths rather than guess.
+let widths = null;
+try {
+  const hsrc = await fetch('/eval/harness.mjs').then((r) => r.text());
+  const found = new Map([...hsrc.matchAll(/name:\s*'([\w-]+)'\s*,\s*width:\s*(\d+)/g)]
+    .map((m) => [m[1], Number(m[2])]));
+  if (vpNames.every((n) => found.has(n))) widths = found;
+} catch { /* fall through to names only */ }
+
+const vpLabel = widths ? vpNames.map((n) => `${n} ${widths.get(n)}`).join(' · ') : vpNames.join(' · ');
+const narrowest = widths ? Math.min(...widths.values()) : VIEWPORTS[0].width;
+
+const batt = $('p', 'source');
+batt.append(
+  document.createTextNode('Battery: '),
+  $('b', null, `${caseCount} cases × ${vpNames.length} viewports = ${pairs} scored pairs`),
+  document.createTextNode(` — ${vpLabel}. Every figure above spans all ${vpNames.length}. `),
+  document.createTextNode(`The grid below shows one width at a time, starting at ${narrowest}px, the tightest of the four.`),
+);
+figures.appendChild(batt);
+
+const src = $('p', 'source cont');
+src.append(document.createTextNode(
+  `${V.baseline.survival_rate} → ${V.agent.survival_rate} survival, ` +
+  `${V.agent.lines} lines against ${V.baseline.lines}. ${cmp.model} · source: `));
+const a = document.createElement('a');
+a.href = '/results/comparison-haiku.json';
+a.textContent = 'results/comparison-haiku.json';
+src.appendChild(a);
+figures.appendChild(src);
+
+/* ── width tabs ───────────────────────────────────────────────────────────────────────── */
+
+const seg = document.getElementById('vpSeg');
+VIEWPORTS.forEach((vp, i) => {
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.append($('span', null, vp.name), $('span', 'px', ` ${vp.width}`));
+  b.setAttribute('aria-pressed', String(i === vpIndex));
+  b.onclick = async () => {
+    if (i === vpIndex) return;
+    vpIndex = i;
+    [...seg.children].forEach((c, j) => c.setAttribute('aria-pressed', String(j === i)));
+    await draw();
+  };
+  seg.appendChild(b);
+});
+
+// The column heads stick directly below the controls bar, whatever height it wraps to.
+const controls = document.getElementById('controls');
+const syncCtl = () => document.documentElement.style.setProperty('--ctlh', controls.offsetHeight + 'px');
+new ResizeObserver(syncCtl).observe(controls);
+syncCtl();
+
+await draw();
+
+/* ── provenance ───────────────────────────────────────────────────────────────────────── */
+
+document.getElementById('prov').innerHTML = `
+  <p>Columns render <code>${VERSIONS.map((v) => v.file).join('</code>, <code>')}</code>
+  exactly as committed — this page imports them, it does not restyle or patch them.
+  Row data is read from <code>results/cases.json</code>; the ${PICKS.length} rows shown are
+  ${PICKS.length} of its ${caseCount} cases.</p>
+  <p>Verdicts are measured here, in order: does it throw, does an image request fail, does
+  anything cross the container edge, is every required value still present and visible.
+  That is the same sequence <code>eval/harness.mjs</code> runs, and the results agree with
+  <code>results/comparison-haiku.json</code> case for case at every width. The scored numbers
+  of record are the ones in <code>results/</code>; this page is the picture, not the oracle.</p>
+  <p><code>demo/ok.jpg</code> is a placeholder photograph supplied by this demo so the cards
+  look like something a team would ship. The harness serves a 1×1 pixel instead — every card
+  clamps the image to an 80×80 box, so it changes how the cards look and not what is measured.
+  No card is ever given a photograph for a case whose data says <code>image: null</code>.</p>
+  <p>One other demo-layer change, for a fair read: where <code>cases.json</code> says
+  <code>image: null</code>, the Baseline card draws a labelled “No image” block and the
+  hardened card draws an unlabelled grey one. This page relabels the hardened card's
+  placeholder to match, so the same empty state does not read as designed in one column and
+  lost in another. The swap happens inside the 80×80 <code>&lt;img&gt;</code> the card itself
+  sized, so no geometry moves; <code>results/agent-card.mjs</code> is unchanged on disk and
+  every verdict here still matches <code>results/comparison-haiku.json</code>.</p>`;
+</script>
+</body>
+</html>
