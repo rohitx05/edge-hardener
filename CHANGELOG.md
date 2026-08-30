@@ -1,38 +1,39 @@
 # Improvement Changelog
 
-> How to use this file: fill each entry AS YOU BUILD, not after. Every row must
-> tie a change to an eval number and to the failure that motivated it. The
-> `[scores: ...]` tag is a private note to yourself showing which rubric category
-> the entry earns — **delete those tags before submission**, they're scaffolding.
->
-> Rubric weights: Agent Eng **30** (tie-break #1) · End-to-End **20** ·
-> Measured Improvement **15** (tie-break #3) · Reproducibility **15** (tie-break #2) ·
-> Problem/Value **15** · Hot Take **5**.
+Primary metric: **survival rate** — the fraction of (adversarial case x viewport)
+pairs where the card renders with no crash, no failed image request, no element
+overflowing its container, and every required value still visible. 25 cases x 4
+viewports = 100 scored pairs, computed by `eval/harness.mjs`. Baseline and agent
+run on the **same model** (claude-haiku-4-5) via `agents/_shared.mjs`, so any
+difference is attributable to design, not model choice.
 
-Primary metric: **Survival rate** = fraction of (adversarial case × viewport) that
-render with (a) no crash, (b) no overflow, (c) **content still present and reachable**.
-Secondary: human-time/task, cost/task (tokens).
-
-| Stage | What I tried & why | Evidence (survival rate + the number that moved) | Decision / learning |
+| Stage | What I tried and why | Evidence | Decision / learning |
 |---|---|---|---|
-| **Baseline** | One-shot prompt: "make this component robust." Same model as advanced. Establishes the honest floor. | `[baseline survival %]` on N cases | Starting point. `[scores: Measured Improvement]` |
-| Iter 1 | Gave the agent the **adversarial case list + harness output** as context (not just the code). Hypothesis: it fails because it can't see how it fails. | `[new %]` | `[kept / revised / removed]` `[scores: Agent Eng — "better context"]` |
-| Iter 2 | Added a **verify-fix loop**: re-run harness after each patch, feed the specific failing assertion back. | `[new %]` | `[kept?]` `[scores: Agent Eng — "verification"]` |
-| Iter 3 | Added **memory of dead patches** after observing the agent retry the same failing fix 3× on the long-string case. | `[new %]` + note it stopped looping | `[kept?]` `[scores: Agent Eng — "memory", + Measured Improvement causal chain]` |
-| Iter 4 | Added the **content-presence verifier** after the agent passed the overflow check by applying `overflow:hidden` / `display:none` — number went green, user silently lost the 80-char name. | `[%]` — show it now REJECTS the cheat | **This is the money entry.** `[scores: Hot Take + Agent Eng + End-to-End]` |
-| Iter 5 (removed) | Tried per-violation "skill" sub-agents (contrast/overflow/empty-state specialists). Added orchestration cost, no survival gain over the single verify-fix loop. | `[% ≈ Iter 4]` | **Removed.** Purposeful < numerous. The PDF rewards this honesty. `[scores: Agent Eng — restraint; satisfies "one experiment you removed"]` |
-| **Final** | Combined Iters 1–4. | `[final %]` vs `[baseline %]` = **+X pts** | Main contribution: `[the one change that moved it most]` |
+| Baseline floor | The unhardened `corpus/restaurant-card.mjs` — nowrap titles, no null guards, image `src` set blindly. | Fragile: **0/100** survive | The starting point. Every failure family is present: crash, console-error, overflow, content-lost. |
+| Harness correction | First harness run reported a flat 0% for *everything*, including a hand-written clean card. Investigated instead of trusting it. | Chromium refused to load the component as a `file://` module, so nothing rendered and all 100 pairs scored as crashes. | **Fixed the loader** (serve over loopback), verified a clean card scores 100%. The oracle was lying; caught it before it poisoned every downstream number. This is the entry I'm most glad exists. |
+| Baseline (one-shot) | Simplest reasonable approach: one model call, "make this component robust," no tools, no feedback. | **50/100** survive, 189 lines, 1 call, $0.072 | Honest floor for "just ask the model once." It reaches for `text-overflow: ellipsis` and clips long names to a tooltip — looks fixed, fails the content-presence check on the 89-char unbreakable string. |
+| Fair-baseline correction | An early hardening pass gave the agent a prop the baseline never saw, producing a fake 100-point gap. Rejected it. | Reclassified: the "gain" was entirely one withheld prop. | Gave **both** sides the identical data contract. A rigged baseline is the fastest way to lose credibility with engineer-judges; the real gap has to survive a fair comparison. |
+| Model choice | On claude-opus-5 the one-shot baseline *also* scored 100% — a frontier model solves self-contained layout hardening blind. | Opus: baseline 100%, agent 100% (see secondary result). | Moved the primary comparison to claude-haiku-4-5, where the model is fallible and the agent design has something to prove. Kept Opus as a "does the loop damage a strong model?" check. |
+| Advanced (verify-fix) | Agent renders the card, runs the harness, reads the *specific* failing assertions, patches against them without hiding content, re-scores, keeps the change only if survival rose. | **100/100** survive, 56 lines, 1 iteration, $0.100 | +50 points over the fair baseline, and a *smaller* diff (56 vs 189 lines). The single thing that moved the number: the agent can see how it failed. |
+| Removed: dead-patch memory | Built memory of failed patches to prevent re-trying dead ends. | `dead_patches: 0` across every run — it never fired. | **Cut.** The task converges in one iteration; memory has no failure to catch here. Kept the finding, dropped the code. |
+| Removed: multi-iteration stop rule | A 2-iterations-without-progress stop guard. | Never triggered — every run reached 100% on iteration 1. | **Cut.** Scaffolding for a loop that doesn't loop on this task. |
+| Removed: hard-rule guard | A static check to reject `display:none` / clipping cheats before they cost a harness run. | Passed unit tests, never rejected a live patch (the first patch was always clean). | **Kept in tests, not claimed as load-bearing.** Verified by 15 unit checks, not by the run. Honest about the difference. |
+| Final | Fair baseline vs verify-fix agent, same model, same 100 pairs. | **50% -> 100%**, 189 -> 56 lines | Main contribution: feeding verified failure signal back into the model. Everything else was measured and cut. |
 
-## The one challenging case (required by rubric)
-Case: `[e.g. 80-char name + 4-line cuisine list + ₹0 price + missing image, mobile viewport]`
-What it revealed: `[the interaction failure the happy path hides — write 2 sentences]`
+## The one challenging case
+`stacked-everything` — an 89-char unbreakable name, null rating, null image, six cuisines,
+and a long booking URL, at 320px. The fragile card **crashes** (`null.toFixed`). The
+baseline **overflows** (the URL and unbroken name spill the container). The agent wraps,
+guards the nulls, and keeps every required value inside the box. It's the case that proves
+the metric can't be passed by clipping — the full name has to actually fit and stay readable.
 
-## Main failure mode (put this in README too)
-`[The single most important way the agent fails, stated plainly.]`
+## Main failure mode
+A verifiable metric is gameable. "No overflow" can be satisfied by `overflow:hidden` or
+`display:none` — the number goes green while the user silently loses content. The whole
+design answer is that the harness's third check is **content presence**, not just
+"nothing spills." The metric encodes the intent, not the proxy.
 
-## Hot Take (5 pts — turn the failure into a lesson)
-A verifiable metric is only as honest as its hardest-to-game assertion. Survival-rate
-looked solid until the agent learned it could win by hiding content. The lesson for
-building reliable agents: **when you give an agent a metric, assume it will optimize the
-metric and not the intent — so your verifier must encode the intent, not the proxy.**
-`[sharpen with your actual observed numbers]`
+## Hot take
+Agentic scaffolding has a capability ceiling. On claude-opus-5 this task is solved in one shot. Memory, verification loops, and orchestration are pure overhead above that line. On claude-haiku-4-5 the same scaffolding recovers 50 points. The engineering question isn't "how many components can I add," it's "is my model above or below the line where they help?" I built four components; one carried the entire gain and I cut the other three. Knowing which side of that line you're on is the design decision.
+
+What surprised me most was that the baseline's ellipsis "fix" looked correct to the eye and still failed. The full name only survived in a tooltip, which is exactly why the harness checks content presence and not just overflow.
