@@ -32,7 +32,7 @@
   --sans: "Archivo", "Segoe UI", system-ui, -apple-system, sans-serif;
   --mono: "JetBrains Mono", "Cascadia Mono", Consolas, ui-monospace, monospace;
 
-  --col: 190px;          /* case rail */
+  --col: 170px;          /* case rail */
   --gut: 26px;
   --gap: 18px;
   --ctlh: 96px;          /* measured at runtime; column heads stick below the controls */
@@ -168,8 +168,12 @@ h1 {
   background: var(--ground);
   margin-top: 54px;
   border-top: 1px solid var(--ink);
-  padding: 16px 0 0;
   display: flex; flex-wrap: wrap; gap: 24px 34px; align-items: flex-end;
+  /* Full-bleed across the wrap's gutters: an opaque band edge to edge, so nothing scrolls
+     visibly past it in the 26px margins. Padding puts the content back on the grid. */
+  margin-left: calc(var(--gut) * -1);
+  margin-right: calc(var(--gut) * -1);
+  padding: 16px var(--gut) 0;
 }
 
 .ctl { display: flex; flex-direction: column; gap: 9px; }
@@ -238,13 +242,34 @@ h1 {
 /* ── grid ─────────────────────────────────────────────────────────────────────────── */
 
 main { padding: 0 0 70px; }
-.grid { display: grid; gap: 32px var(--gap); align-items: start; }
+
+/* The three version columns share whatever is left and may shrink to nothing — a `minmax`
+   floor here (hostWidth + padding) made the grid wider than the window at every tab and cut
+   the Agent column off the right edge. The card's own host box keeps its exact measurement
+   width regardless; when that is wider than its column, `.window` scrolls inside the cell.
+   The page itself must never scroll sideways. */
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, var(--col)) repeat(3, minmax(0, 1fr));
+  gap: 32px var(--gap);
+  align-items: start;
+  max-width: 100%;
+}
+/* Grid items default to min-width:auto, which lets wide content push the track open. */
+.caselabel, .cell { min-width: 0; }
 
 .colhead {
   position: sticky; top: var(--ctlh); z-index: 10;
   background: var(--ground);
-  padding: 12px 0;
+  /* Widened by half a gap on each side so the opaque band and its rule run continuously
+     across the column gaps — otherwise card content scrolls through the bare strips. */
+  padding: 12px calc(var(--gap) / 2);
+  margin: 0 calc(var(--gap) / -2);
   border-bottom: 1px solid var(--ink);
+  /* The grid aligns items to the start, which left the empty rail head shorter than the
+     three named ones and its rule floating above theirs. Stretch them to a common height so
+     the band reads as one rule. */
+  align-self: stretch;
 }
 .colhead b {
   font-family: var(--mono); font-size: 12px; font-weight: 700;
@@ -630,7 +655,6 @@ async function draw() {
   const hostWidth = Math.min(vp.width, 420);
 
   grid.innerHTML = '';
-  grid.style.gridTemplateColumns = `minmax(140px, var(--col)) repeat(3, minmax(${hostWidth + 46}px, 1fr))`;
 
   grid.appendChild($('div', 'colhead'));
   for (const v of VERSIONS) {
